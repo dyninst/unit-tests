@@ -14,3 +14,4 @@ set(UNIT_TESTS_WARNING_FLAGS -Wall -Wextra -pedantic)
 enable_testing()
 
 add_subdirectory(instructionAPI)
+add_subdirectory(parseAPI)
