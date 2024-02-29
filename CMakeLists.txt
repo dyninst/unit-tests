@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13.0)
 project(unit-tests)
 
-find_package(Dyninst 12.3.0 REQUIRED COMPONENTS parseAPI)
+find_package(Dyninst 12.3.0 REQUIRED COMPONENTS parseAPI instructionAPI)
 
 if(NOT DYNINST_SOURCE_TREE)
   message(FATAL_ERROR"Must specify DYNINST_SOURCE_TREE")
