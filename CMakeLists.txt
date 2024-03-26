@@ -4,7 +4,7 @@ project(unit-tests)
 find_package(Dyninst 13.0.0 REQUIRED COMPONENTS parseAPI instructionAPI)
 
 if(NOT DYNINST_SOURCE_TREE)
-  message(FATAL_ERROR"Must specify DYNINST_SOURCE_TREE")
+  message(FATAL_ERROR "Must specify DYNINST_SOURCE_TREE")
 endif()
 
 set(UNIT_TESTS_INCLUDES ${DYNINST_SOURCE_TREE})
