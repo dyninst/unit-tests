@@ -1,0 +1,65 @@
+name: Pull Request Tests
+
+on:
+  pull_request:
+    branches:
+    - master
+  types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch: null
+
+jobs:
+  gcc:
+    if: github.event.pull_request.draft == false
+    permissions:
+      packages: read
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/dyninst/amd64/ubuntu-20.04:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.github_token }}
+
+    name: gcc
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Build
+      run: |
+        flags="-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++"
+        cmake .. ${flags} -DDyninst_DIR=/dyninst/install/lib/cmake/Dyninst
+        cmake --build . --parallel 2
+
+    - name: Run
+      run: |
+        ctest -VV --output-on-failure .
+
+
+  clang:
+    if: github.event.pull_request.draft == false
+    permissions:
+      packages: read
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/dyninst/amd64/ubuntu-20.04:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.github_token }}
+    name: clang
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Build
+      run: |
+        flags="-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++"
+        cmake .. ${flags} -DDyninst_DIR=/dyninst/install/lib/cmake/Dyninst
+        cmake --build . --parallel 2
+
+    - name: Run
+      run: |
+        ctest -VV --output-on-failure .
