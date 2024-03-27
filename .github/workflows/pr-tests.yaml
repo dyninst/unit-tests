@@ -3,9 +3,9 @@ name: Pull Request Tests
 on:
   pull_request:
     branches:
-    - master
-  types: [opened, synchronize, reopened, ready_for_review]
-  workflow_dispatch: null
+      - master
+    types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
 
 jobs:
   gcc:
@@ -49,6 +49,7 @@ jobs:
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.github_token }}
+
     name: clang
     steps:
     - name: Checkout
