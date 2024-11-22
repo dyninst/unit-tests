@@ -13,5 +13,7 @@ set(UNIT_TESTS_WARNING_FLAGS -Wall -Wextra -pedantic)
 
 enable_testing()
 
+add_subdirectory(dwarf)
+add_subdirectory(elf)
 add_subdirectory(instructionAPI)
 add_subdirectory(parseAPI)
