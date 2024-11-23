@@ -25,55 +25,57 @@ std::array<const unsigned char, num_bytes> buffer = {
   0xcd, 0x0a,                                       // (14) int 0x0a
 };
 
-bool run_32() {
-  std::array<bool, num_tests> answers = {
-    false,    // (1)
-    false,    // (2)
-    false,    // (3)
-    false,    // (4)
-    false,    // (5)
-    true,     // (6)
-    true,     // (7)
-    false,    // (8)
-    true,     // (9)
-    false,    // (10)
-    false,    // (11)
-    true,     // (12)
-    false,    // (13)
-    true,     // (14)
-  };
-
-  di::InstructionDecoder decoder(buffer.data(), buffer.size(), Dyninst::Arch_x86);
-
-  for(auto test_num=0; test_num < num_tests; test_num++) {
-    auto i = decoder.decode();
-    if(!i.isValid()) {
-      std::cerr << "Decode failed for test " << (test_num+1) << "\n";
+template <int N>
+bool run(di::InstructionDecoder dec, std::array<bool, N> const& answers) {
+  for(auto i=0; i < N; i++) {
+    auto insn = dec.decode();
+    if(!insn.isValid()) {
+      std::cerr << "Decode failed for test " << (i+1) << "\n";
       return false;
     }
-    if(answers[test_num] != di::isSystemCall(i)) {
-      std::cerr << "Test " << (test_num+1) << " failed\n";
+    if(answers[i] != di::isSystemCall(insn)) {
+      std::cerr << "Test " << (i+1) << " failed\n";
+      return false;
+    }
+  }
+  return true;
+}
+
+bool run_32() {
+  {
+    std::array<bool, num_tests> answers = {
+      false,    // (1)
+      false,    // (2)
+      false,    // (3)
+      false,    // (4)
+      false,    // (5)
+      true,     // (6)
+      true,     // (7)
+      false,    // (8)
+      true,     // (9)
+      false,    // (10)
+      false,    // (11)
+      true,     // (12)
+      false,    // (13)
+      true,     // (14)
+    };
+
+    di::InstructionDecoder decoder(buffer.data(), buffer.size(), Dyninst::Arch_x86);
+    if(!run<num_tests>(decoder, answers)) {
       return false;
     }
   }
 
   {
-    // into is not valid in 64-bit mode
-    std::array<const unsigned char, 1> x86_only_buffer = { 0xce };
-    std::array<bool, 1> x86_only_answers = { false };
-    di::InstructionDecoder x86_only_decoder(x86_only_buffer.data(), x86_only_buffer.size(), Dyninst::Arch_x86);
-    for(auto i=0; i < x86_only_answers.size(); i++) {
-      auto insn = x86_only_decoder.decode();
-      if(!insn.isValid()) {
-        std::cerr << "Decode failed for test " << (i+1) << "\n";
-        return false;
-      }
-      if(x86_only_answers[i] != di::isSystemCall(insn)) {
-        std::cerr << "Test " << (i+1) << " failed\n";
-        return false;
-      }
-    }
+    // `into` is only valid in 32-bit mode
+    constexpr auto num_tests = 1;
+    std::array<const unsigned char, num_tests> buffer = { 0xce };
+    std::array<bool, num_tests> answers = { false };
+    di::InstructionDecoder decoder(buffer.data(), buffer.size(), Dyninst::Arch_x86);
 
+    if(!run<num_tests>(decoder, answers)) {
+      return false;
+    }
   }
   return true;
 }
