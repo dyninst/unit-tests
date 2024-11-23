@@ -57,9 +57,24 @@ bool run_32() {
     }
   }
 
-  // into is not valid in 64-bit mode
-//  0xce
+  {
+    // into is not valid in 64-bit mode
+    std::array<const unsigned char, 1> x86_only_buffer = { 0xce };
+    std::array<bool, 1> x86_only_answers = { false };
+    di::InstructionDecoder x86_only_decoder(x86_only_buffer.data(), x86_only_buffer.size(), Dyninst::Arch_x86);
+    for(auto i=0; i < x86_only_answers.size(); i++) {
+      auto insn = x86_only_decoder.decode();
+      if(!insn.isValid()) {
+        std::cerr << "Decode failed for test " << (i+1) << "\n";
+        return false;
+      }
+      if(x86_only_answers[i] != di::isSystemCall(insn)) {
+        std::cerr << "Test " << (i+1) << " failed\n";
+        return false;
+      }
+    }
 
+  }
   return true;
 }
 
