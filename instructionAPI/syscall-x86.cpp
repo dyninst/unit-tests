@@ -44,19 +44,21 @@ bool run_32() {
   };
 
   di::InstructionDecoder decoder(buffer.data(), buffer.size(), Dyninst::Arch_x86);
-  int test_num = 0;
-  di::Instruction i;
 
-  do {
-    i = decoder.decode();
-    if(i.isValid()) {
-      if(answers[test_num] != di::isSystemCall(i)) {
-        std::cerr << "Test " << (test_num+1) << " failed\n";
-        return false;
-      }
+  for(auto test_num=0; test_num < num_tests; test_num++) {
+    auto i = decoder.decode();
+    if(!i.isValid()) {
+      std::cerr << "Decode failed for test " << (test_num+1) << "\n";
+      return false;
     }
-    test_num++;
-  } while(i.isValid());
+    if(answers[test_num] != di::isSystemCall(i)) {
+      std::cerr << "Test " << (test_num+1) << " failed\n";
+      return false;
+    }
+  }
+
+  // into is not valid in 64-bit mode
+//  0xce
 
   return true;
 }
@@ -80,19 +82,18 @@ bool run_64()  {
   };
 
   di::InstructionDecoder decoder(buffer.data(), buffer.size(), Dyninst::Arch_x86_64);
-  int test_num = 0;
-  di::Instruction i;
 
-  do {
-    i = decoder.decode();
-    if(i.isValid()) {
-      if(answers[test_num] != di::isSystemCall(i)) {
-        std::cerr << "Test " << (test_num+1) << " failed\n";
-        return false;
-      }
+  for(auto test_num=0; test_num < num_tests; test_num++) {
+    auto i = decoder.decode();
+    if(!i.isValid()) {
+      std::cerr << "Decode failed for test " << (test_num+1) << "\n";
+      return false;
     }
-    test_num++;
-  } while(i.isValid());
+    if(answers[test_num] != di::isSystemCall(i)) {
+      std::cerr << "Test " << (test_num+1) << " failed\n";
+      return false;
+    }
+  }
 
   return true;
 }
