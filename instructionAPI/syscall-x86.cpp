@@ -6,10 +6,6 @@
 
 namespace di = Dyninst::InstructionAPI;
 
-// Convention for CTest
-constexpr int PASS =  0;
-constexpr int FAIL = -1;
-
 constexpr auto num_tests = 15;
 constexpr auto num_bytes = 63UL;
 std::array<const unsigned char, num_bytes> buffer = {
@@ -110,6 +106,10 @@ int main(int argc, char **argv) {
     std::cerr << "Usage: " << argv[0] << " [32|64]\n";
     return -1;
   }
+
+  // Convention for CTest
+  constexpr int PASS =  0;
+  constexpr int FAIL = -1;
 
   std::string type{argv[1]};
 
