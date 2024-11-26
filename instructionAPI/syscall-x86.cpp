@@ -115,7 +115,7 @@ int main(int argc, char **argv) {
 
   // Convention for CTest
   constexpr int PASS =  0;
-  constexpr int FAIL = -1;
+  constexpr int FAIL =  1;
 
   std::string type{argv[1]};
 
