@@ -106,16 +106,19 @@ bool run_64()  {
   return true;
 }
 
+void usage(char const* prgname) {
+  std::cerr << "Usage: " << prgname << " [32|64]\n";
+}
 
 int main(int argc, char **argv) {
-  if(argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " [32|64]\n";
-    return -1;
-  }
-
   // Convention for CTest
   constexpr int PASS =  0;
   constexpr int FAIL =  1;
+
+  if(argc != 2) {
+    usage(argv[0]);
+    return FAIL;
+  }
 
   std::string type{argv[1]};
 
@@ -128,6 +131,6 @@ int main(int argc, char **argv) {
     return run_64() ? PASS : FAIL;
   }
 
-  std::cerr << "Unknown type\n" << "Usage: " << argv[0] << " [32|64]\n";
-  return -1;
+  usage(argv[0]);
+  return FAIL;
 }
