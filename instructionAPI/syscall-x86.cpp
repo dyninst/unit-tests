@@ -99,17 +99,8 @@ bool run_64()  {
   };
 
   di::InstructionDecoder decoder(buffer.data(), buffer.size(), Dyninst::Arch_x86_64);
-
-  for(auto test_num=0; test_num < num_tests; test_num++) {
-    auto i = decoder.decode();
-    if(!i.isValid()) {
-      std::cerr << "Decode failed for test " << (test_num+1) << "\n";
-      return false;
-    }
-    if(answers[test_num] != di::isSystemCall(i)) {
-      std::cerr << "Test " << (test_num+1) << " failed\n";
-      return false;
-    }
+  if(!run<num_tests>(decoder, answers) {
+    return false;
   }
 
   return true;
