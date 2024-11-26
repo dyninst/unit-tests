@@ -6,64 +6,77 @@
 
 namespace di = Dyninst::InstructionAPI;
 
-// Convention for CTest
-constexpr int PASS =  0;
-constexpr int FAIL = -1;
-
-constexpr auto num_tests = 15;
-constexpr auto num_bytes = 63UL;
+constexpr auto num_tests = 14;
+constexpr auto num_bytes = 62UL;
 std::array<const unsigned char, num_bytes> buffer = {
   0xe8, 0x10, 0x00, 0x00, 0x00,                     // (1)  call 0x10 + rip
   0x64, 0xff, 0x14, 0x25, 0x10, 0x00, 0x00, 0x00,   // (2)  call  [q|d]word ptr fs:[0x10]
   0x64, 0xff, 0x15, 0x10, 0x00, 0x00, 0x00,         // (3)  32-bit 'call dword ptr fs:0x10', 64-bit 'call qword ptr fs:[rip + 0x10]'
   0xff, 0x14, 0x25, 0x10, 0x00, 0x00, 0x00,         // (4)  call  [q|d]word ptr [0x10]
-  0xff, 0x15, 0x10, 0x00, 0x00, 0x00,               // (5)  32-bit 'call dword ptr 0x10', 64-bit 'call qword ptr [rip + 0x10]'
+  0xff, 0x15, 0x10, 0x00, 0x00, 0x00,               // (5)  32-bit 'call dword ptr [0x10]', 64-bit 'call qword ptr [rip + 0x10]'
   0x65, 0xff, 0x14, 0x25, 0x10, 0x00, 0x00, 0x00,   // (6)  call  [q|d]word ptr gs:[0x10]
-  0x65, 0xff, 0x15, 0x10, 0x00, 0x00, 0x00,         // (7)  32-bit 'call dword ptr gs:0x10', 64-bit 'call qword ptr gs:[rip + 0x10]'
+  0x65, 0xff, 0x15, 0x10, 0x00, 0x00, 0x00,         // (7)  32-bit 'call dword ptr gs:[0x10]', 64-bit 'call qword ptr gs:[rip + 0x10]'
   0x65, 0xff, 0x50, 0x10,                           // (8)  call gs:[rax + 0x10]
   0xcd, 0x80,                                       // (9)  int 0x80
   0xcc,                                             // (10) int3
-  0xce,                                             // (11) into
-  0xf1,                                             // (12) int1
-  0x0f, 0x05,                                       // (13) syscall
-  0x0f, 0x34,                                       // (14) sysenter
-  0xcd, 0x0a,                                       // (15) int 0x0a
+  0xf1,                                             // (11) int1
+  0x0f, 0x05,                                       // (12) syscall
+  0x0f, 0x34,                                       // (13) sysenter
+  0xcd, 0x0a,                                       // (14) int 0x0a
 };
 
-bool run_32() {
-  std::array<bool, num_tests> answers = {
-    false,    // (1)
-    false,    // (2)
-    false,    // (3)
-    false,    // (4)
-    false,    // (5)
-    true,     // (6)
-    true,     // (7)
-    false,    // (8)
-    true,     // (9)
-    false,    // (10)
-    false,    // (11)
-    false,    // (12)
-    true,     // (13)
-    false,    // (14)
-    true,     // (15)
-  };
-
-  di::InstructionDecoder decoder(buffer.data(), buffer.size(), Dyninst::Arch_x86);
-  int test_num = 0;
-  di::Instruction i;
-
-  do {
-    i = decoder.decode();
-    if(i.isValid()) {
-      if(answers[test_num] != di::isSystemCall(i)) {
-        std::cerr << "Test " << (test_num+1) << " failed\n";
-        return false;
-      }
+template <int N>
+bool run(di::InstructionDecoder dec, std::array<bool, N> const& answers) {
+  for(auto i=0; i < N; i++) {
+    auto insn = dec.decode();
+    if(!insn.isValid()) {
+      std::cerr << "Decode failed for test " << (i+1) << "\n";
+      return false;
     }
-    test_num++;
-  } while(i.isValid());
+    if(answers[i] != di::isSystemCall(insn)) {
+      std::cerr << "Test " << (i+1) << " failed\n";
+      return false;
+    }
+  }
+  return true;
+}
 
+bool run_32() {
+  {
+    std::array<bool, num_tests> answers = {
+      false,    // (1)
+      false,    // (2)
+      false,    // (3)
+      false,    // (4)
+      false,    // (5)
+      true,     // (6)
+      true,     // (7)
+      false,    // (8)
+      true,     // (9)
+      false,    // (10)
+      false,    // (11)
+      true,     // (12)
+      false,    // (13)
+      true,     // (14)
+    };
+
+    di::InstructionDecoder decoder(buffer.data(), buffer.size(), Dyninst::Arch_x86);
+    if(!run<num_tests>(decoder, answers)) {
+      return false;
+    }
+  }
+
+  {
+    // `into` is only valid in 32-bit mode
+    constexpr auto num_tests = 1;
+    std::array<const unsigned char, num_tests> buffer = { 0xce };
+    std::array<bool, num_tests> answers = { false };
+    di::InstructionDecoder decoder(buffer.data(), buffer.size(), Dyninst::Arch_x86);
+
+    if(!run<num_tests>(decoder, answers)) {
+      return false;
+    }
+  }
   return true;
 }
 
@@ -80,35 +93,31 @@ bool run_64()  {
     true,     // (9)
     false,    // (10)
     false,    // (11)
-    false,    // (12)
-    true,     // (13)
-    false,    // (14)
-    true,     // (15)
+    true,     // (12)
+    false,    // (13)
+    true,     // (14)
   };
 
   di::InstructionDecoder decoder(buffer.data(), buffer.size(), Dyninst::Arch_x86_64);
-  int test_num = 0;
-  di::Instruction i;
-
-  do {
-    i = decoder.decode();
-    if(i.isValid()) {
-      if(answers[test_num] != di::isSystemCall(i)) {
-        std::cerr << "Test " << (test_num+1) << " failed\n";
-        return false;
-      }
-    }
-    test_num++;
-  } while(i.isValid());
+  if(!run<num_tests>(decoder, answers)) {
+    return false;
+  }
 
   return true;
 }
 
+void usage(char const* prgname) {
+  std::cerr << "Usage: " << prgname << " [32|64]\n";
+}
 
 int main(int argc, char **argv) {
+  // Convention for CTest
+  constexpr int PASS =  0;
+  constexpr int FAIL =  1;
+
   if(argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " [32|64]\n";
-    return -1;
+    usage(argv[0]);
+    return FAIL;
   }
 
   std::string type{argv[1]};
@@ -122,6 +131,6 @@ int main(int argc, char **argv) {
     return run_64() ? PASS : FAIL;
   }
 
-  std::cerr << "Unknown type\n" << "Usage: " << argv[0] << " [32|64]\n";
-  return -1;
+  usage(argv[0]);
+  return FAIL;
 }
