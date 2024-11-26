@@ -99,7 +99,7 @@ bool run_64()  {
   };
 
   di::InstructionDecoder decoder(buffer.data(), buffer.size(), Dyninst::Arch_x86_64);
-  if(!run<num_tests>(decoder, answers) {
+  if(!run<num_tests>(decoder, answers)) {
     return false;
   }
 
