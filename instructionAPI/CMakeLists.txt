@@ -7,4 +7,3 @@ target_link_libraries(syscall_x86 PRIVATE Dyninst::instructionAPI)
 
 add_test(NAME instructionAPI_syscall_x86_32 COMMAND syscall_x86 "32")
 add_test(NAME instructionAPI_syscall_x86_64 COMMAND syscall_x86 "64")
-

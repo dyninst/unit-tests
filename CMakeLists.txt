@@ -11,6 +11,11 @@ set(UNIT_TESTS_INCLUDES ${DYNINST_SOURCE_TREE})
 
 set(UNIT_TESTS_WARNING_FLAGS -Wall -Wextra -pedantic)
 
+list(INSERT CMAKE_MODULE_PATH 0 "${PROJECT_SOURCE_DIR}/cmake"
+     "${PROJECT_SOURCE_DIR}/cmake/tpls" "${PROJECT_SOURCE_DIR}/cmake/Modules")
+
+include(DyninstElfUtils)
+
 enable_testing()
 
 add_subdirectory(dwarf)
