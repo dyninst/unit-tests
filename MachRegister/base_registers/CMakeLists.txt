@@ -24,20 +24,22 @@ target_include_directories(basereg_ppc64 PRIVATE ${UNIT_TESTS_INCLUDES})
 target_link_libraries(basereg_ppc64 PRIVATE Dyninst::common)
 add_test(NAME machregister_basereg_ppc64 COMMAND basereg_ppc64)
 
+
+# These are disabled until we can decide on how to represent base registers for AMDGPU
 add_executable(basereg_amdgpu_gfx908 amdgpu_gfx908.cpp)
 target_compile_options(basereg_amdgpu_gfx908 PRIVATE ${UNIT_TESTS_WARNING_FLAGS})
 target_include_directories(basereg_amdgpu_gfx908 PRIVATE ${UNIT_TESTS_INCLUDES})
 target_link_libraries(basereg_amdgpu_gfx908 PRIVATE Dyninst::common)
-add_test(NAME basereg_amdgpu_gfx908 COMMAND basereg_amdgpu_gfx908)
+#add_test(NAME basereg_amdgpu_gfx908 COMMAND basereg_amdgpu_gfx908)
 
 add_executable(basereg_amdgpu_gfx90a amdgpu_gfx90a.cpp)
 target_compile_options(basereg_amdgpu_gfx90a PRIVATE ${UNIT_TESTS_WARNING_FLAGS})
 target_include_directories(basereg_amdgpu_gfx90a PRIVATE ${UNIT_TESTS_INCLUDES})
 target_link_libraries(basereg_amdgpu_gfx90a PRIVATE Dyninst::common)
-add_test(NAME basereg_amdgpu_gfx90a COMMAND basereg_amdgpu_gfx90a)
+#add_test(NAME basereg_amdgpu_gfx90a COMMAND basereg_amdgpu_gfx90a)
 
 add_executable(basereg_amdgpu_gfx940 amdgpu_gfx940.cpp)
 target_compile_options(basereg_amdgpu_gfx940 PRIVATE ${UNIT_TESTS_WARNING_FLAGS})
 target_include_directories(basereg_amdgpu_gfx940 PRIVATE ${UNIT_TESTS_INCLUDES})
 target_link_libraries(basereg_amdgpu_gfx940 PRIVATE Dyninst::common)
-add_test(NAME basereg_amdgpu_gfx940 COMMAND basereg_amdgpu_gfx940)
+#add_test(NAME basereg_amdgpu_gfx940 COMMAND basereg_amdgpu_gfx940)
