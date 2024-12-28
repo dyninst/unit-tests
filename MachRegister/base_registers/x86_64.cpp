@@ -2,9 +2,46 @@
 #include "registers/x86_64_regs.h"
 
 int main() {
+  BASEREG_CHECK(x86_64::al, x86_64::rax);
+  BASEREG_CHECK(x86_64::ah, x86_64::rax);
   BASEREG_CHECK(x86_64::ax, x86_64::rax);
   BASEREG_CHECK(x86_64::eax, x86_64::rax);
   BASEREG_CHECK(x86_64::rax, x86_64::rax);
+
+  BASEREG_CHECK(x86_64::bl, x86_64::rbx);
+  BASEREG_CHECK(x86_64::bh, x86_64::rbx);
+  BASEREG_CHECK(x86_64::bx, x86_64::rbx);
+  BASEREG_CHECK(x86_64::ebx, x86_64::rbx);
+  BASEREG_CHECK(x86_64::rbx, x86_64::rbx);
+
+  BASEREG_CHECK(x86_64::cl, x86_64::rcx);
+  BASEREG_CHECK(x86_64::ch, x86_64::rcx);
+  BASEREG_CHECK(x86_64::cx, x86_64::rcx);
+  BASEREG_CHECK(x86_64::ecx, x86_64::rcx);
+  BASEREG_CHECK(x86_64::rcx, x86_64::rcx);
+
+  BASEREG_CHECK(x86_64::si, x86_64::rsi);
+  BASEREG_CHECK(x86_64::esi, x86_64::rsi);
+  BASEREG_CHECK(x86_64::sil, x86_64::rsi);
+  BASEREG_CHECK(x86_64::rsi, x86_64::rsi);
+
+  BASEREG_CHECK(x86_64::di, x86_64::rdi);
+  BASEREG_CHECK(x86_64::edi, x86_64::rdi);
+  BASEREG_CHECK(x86_64::dil, x86_64::rdi);
+  BASEREG_CHECK(x86_64::rdi, x86_64::rdi);
+
+  BASEREG_CHECK(x86_64::bp, x86_64::rbp);
+  BASEREG_CHECK(x86_64::ebp, x86_64::rbp);
+  BASEREG_CHECK(x86_64::bpl, x86_64::rbp);
+  BASEREG_CHECK(x86_64::rbp, x86_64::rbp);
+  
+  BASEREG_CHECK(x86_64::r15b, x86_64::r15);
+  BASEREG_CHECK(x86_64::r15w, x86_64::r15);
+  BASEREG_CHECK(x86_64::r15d, x86_64::r15);
+  BASEREG_CHECK(x86_64::r15, x86_64::r15);
+
+  BASEREG_CHECK(x86_64::eip, x86_64::rip);
+  BASEREG_CHECK(x86_64::rip, x86_64::rip);
 
   BASEREG_CHECK(x86_64::sp, x86_64::rsp);
   BASEREG_CHECK(x86_64::esp, x86_64::rsp);
@@ -45,6 +82,12 @@ int main() {
 
   BASEREG_CHECK(x86_64::zmm0, x86_64::zmm0);
   BASEREG_CHECK(x86_64::zmm31, x86_64::zmm31);
+
+  BASEREG_CHECK(x86_64::ds, x86_64::ds);
+  BASEREG_CHECK(x86_64::cr0, x86_64::cr0);
+  BASEREG_CHECK(x86_64::dr0, x86_64::dr0);
+  BASEREG_CHECK(x86_64::st0, x86_64::st0);
+  BASEREG_CHECK(x86_64::k0, x86_64::k0);
 
   return EXIT_SUCCESS;
 }

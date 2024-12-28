@@ -2,11 +2,34 @@
 #include "registers/x86_regs.h"
 
 int main() {
+  BASEREG_CHECK(x86::al, x86::eax);
+  BASEREG_CHECK(x86::ah, x86::eax);
   BASEREG_CHECK(x86::ax, x86::eax);
   BASEREG_CHECK(x86::eax, x86::eax);
 
+  BASEREG_CHECK(x86::bl, x86::ebx);
+  BASEREG_CHECK(x86::bh, x86::ebx);
+  BASEREG_CHECK(x86::bx, x86::ebx);
+  BASEREG_CHECK(x86::ebx, x86::ebx);
+
+  BASEREG_CHECK(x86::cl, x86::ecx);
+  BASEREG_CHECK(x86::ch, x86::ecx);
+  BASEREG_CHECK(x86::cx, x86::ecx);
+  BASEREG_CHECK(x86::ecx, x86::ecx);
+
+  BASEREG_CHECK(x86::si, x86::esi);
+  BASEREG_CHECK(x86::esi, x86::esi);
+
+  BASEREG_CHECK(x86::di, x86::edi);
+  BASEREG_CHECK(x86::edi, x86::edi);
+
+  BASEREG_CHECK(x86::bp, x86::ebp);
+  BASEREG_CHECK(x86::ebp, x86::ebp);
+
   BASEREG_CHECK(x86::sp, x86::esp);
   BASEREG_CHECK(x86::esp, x86::esp);
+
+  BASEREG_CHECK(x86::eip, x86::eip);
 
   BASEREG_CHECK(x86::flags, x86::flags);
   BASEREG_CHECK(x86::cf, x86::flags);
@@ -43,6 +66,12 @@ int main() {
 
   BASEREG_CHECK(x86::zmm0, x86::zmm0);
   BASEREG_CHECK(x86::zmm7, x86::zmm7);
+
+  BASEREG_CHECK(x86::ds, x86::ds);
+  BASEREG_CHECK(x86::cr0, x86::cr0);
+  BASEREG_CHECK(x86::dr0, x86::dr0);
+  BASEREG_CHECK(x86::st0, x86::st0);
+  BASEREG_CHECK(x86::k0, x86::k0);
 
   return EXIT_SUCCESS;
 }
