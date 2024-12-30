@@ -1,0 +1,19 @@
+project(dataflowAPI_rose_registers LANGUAGES CXX)
+
+add_executable(rose_reg_x86 x86.cpp)
+target_compile_options(rose_reg_x86 PRIVATE ${UNIT_TESTS_WARNING_FLAGS})
+target_include_directories(rose_reg_x86 PRIVATE ${UNIT_TESTS_INCLUDES})
+target_link_libraries(rose_reg_x86 PRIVATE Dyninst::parseAPI)
+add_test(NAME rose_reg_x86 COMMAND rose_reg_x86)
+
+add_executable(rose_reg_x86_64 x86_64.cpp)
+target_compile_options(rose_reg_x86_64 PRIVATE ${UNIT_TESTS_WARNING_FLAGS})
+target_include_directories(rose_reg_x86_64 PRIVATE ${UNIT_TESTS_INCLUDES})
+target_link_libraries(rose_reg_x86_64 PRIVATE Dyninst::parseAPI)
+add_test(NAME rose_reg_x86_64 COMMAND rose_reg_x86_64)
+
+add_executable(rose_reg_aarch64 aarch64.cpp)
+target_compile_options(rose_reg_aarch64 PRIVATE ${UNIT_TESTS_WARNING_FLAGS})
+target_include_directories(rose_reg_aarch64 PRIVATE ${UNIT_TESTS_INCLUDES})
+target_link_libraries(rose_reg_aarch64 PRIVATE Dyninst::parseAPI)
+add_test(NAME rose_reg_aarch64 COMMAND rose_reg_aarch64)
