@@ -3,6 +3,10 @@ project(unit-tests)
 
 find_package(Dyninst 13.0.0 REQUIRED COMPONENTS parseAPI instructionAPI)
 
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 17)
+endif()
+
 if(NOT DYNINST_SOURCE_TREE)
   message(FATAL_ERROR "Must specify DYNINST_SOURCE_TREE")
 endif()
