@@ -120,5 +120,17 @@ int main() {
   TYPE_QUERIES_CHECK(Dyninst::x86_64::k0, isVector);
   TYPE_QUERIES_CHECK(Dyninst::x86_64::k7, isVector);
 
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::x86_64::mm0, isControlStatus);
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::x86_64::mm7, isControlStatus);
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::x86_64::xmm0, isControlStatus);
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::x86_64::xmm31, isControlStatus);
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::x86_64::ymm0, isControlStatus);
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::x86_64::ymm31, isControlStatus);
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::x86_64::zmm0, isControlStatus);
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::x86_64::zmm31, isControlStatus);
+
+  TYPE_QUERIES_CHECK(Dyninst::x86_64::k0, isControlStatus);
+  TYPE_QUERIES_CHECK(Dyninst::x86_64::k7, isControlStatus);
+
   return EXIT_SUCCESS;
 }

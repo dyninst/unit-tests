@@ -36,5 +36,12 @@ int main() {
   TYPE_QUERIES_CHECK(Dyninst::amdgpu_gfx940::acc0, isVector);
   TYPE_QUERIES_CHECK(Dyninst::amdgpu_gfx940::acc255, isVector);
 
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::amdgpu_gfx940::s0, isControlStatus);
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::amdgpu_gfx940::s101, isControlStatus);
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::amdgpu_gfx940::v0, isControlStatus);
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::amdgpu_gfx940::v255, isControlStatus);
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::amdgpu_gfx940::acc0, isControlStatus);
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::amdgpu_gfx940::acc255, isControlStatus);
+
   return EXIT_SUCCESS;
 }

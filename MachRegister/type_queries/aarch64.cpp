@@ -99,5 +99,11 @@ int main() {
   TYPE_QUERIES_CHECK(Dyninst::aarch64::zas0, isVector);
   TYPE_QUERIES_CHECK(Dyninst::aarch64::zas3, isVector);
 
+  TYPE_QUERIES_CHECK(Dyninst::aarch64::p0, isControlStatus);
+  TYPE_QUERIES_CHECK(Dyninst::aarch64::p15, isControlStatus);
+  TYPE_QUERIES_CHECK(Dyninst::aarch64::fpcr, isControlStatus);
+  TYPE_QUERIES_CHECK(Dyninst::aarch64::fpsr, isControlStatus);
+  TYPE_QUERIES_CHECK(Dyninst::aarch64::ffr, isControlStatus);
+
   return EXIT_SUCCESS;
 }

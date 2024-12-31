@@ -36,5 +36,12 @@ int main() {
   TYPE_QUERIES_CHECK(Dyninst::amdgpu_gfx908::acc0, isVector);
   TYPE_QUERIES_CHECK(Dyninst::amdgpu_gfx908::acc255, isVector);
 
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::amdgpu_gfx908::s0, isControlStatus);
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::amdgpu_gfx908::s101, isControlStatus);
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::amdgpu_gfx908::v0, isControlStatus);
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::amdgpu_gfx908::v255, isControlStatus);
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::amdgpu_gfx908::acc0, isControlStatus);
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::amdgpu_gfx908::acc255, isControlStatus);
+
   return EXIT_SUCCESS;
 }
