@@ -89,8 +89,8 @@ int main() {
   TYPE_QUERIES_CHECK(Dyninst::x86_64::mm0, isFloatingPoint);
   TYPE_QUERIES_CHECK(Dyninst::x86_64::mm7, isFloatingPoint);
 
-  TYPE_QUERIES_CHECK_NOT(Dyninst::x86_64::k0, isFloatingPoint);
-  TYPE_QUERIES_CHECK_NOT(Dyninst::x86_64::k7, isFloatingPoint);
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::x86_64::k0, isFloatingPoint);
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::x86_64::k7, isFloatingPoint);
 
   TYPE_QUERIES_CHECK(Dyninst::x86_64::fcw, isFloatingPoint);
   TYPE_QUERIES_CHECK(Dyninst::x86_64::fsw, isFloatingPoint);

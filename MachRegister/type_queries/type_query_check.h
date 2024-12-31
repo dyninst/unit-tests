@@ -19,7 +19,7 @@ std::ostream& operator<<(std::ostream &os, Dyninst::MachRegister const& r) {
   }                                                   \
 
 
-#define TYPE_QUERIES_CHECK_NOT(reg, type_func)        \
+#define TYPE_QUERIES_ASSERT_FALSE(reg, type_func)        \
   if(reg.type_func()) {                              \
     std::cerr << "FAILED " #reg "." #type_func "\n";  \
     return EXIT_FAILURE;                              \
