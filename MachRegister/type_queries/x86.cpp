@@ -118,5 +118,16 @@ int main() {
   TYPE_QUERIES_CHECK(Dyninst::x86::k0, isControlStatus);
   TYPE_QUERIES_CHECK(Dyninst::x86::k7, isControlStatus);
 
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::x86::mm0, isGeneralPurpose)
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::x86::mm7, isGeneralPurpose)
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::x86::xmm0, isGeneralPurpose)
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::x86::xmm7, isGeneralPurpose)
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::x86::ymm0, isGeneralPurpose)
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::x86::ymm7, isGeneralPurpose)
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::x86::zmm0, isGeneralPurpose)
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::x86::zmm7, isGeneralPurpose)
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::x86::k0, isGeneralPurpose);
+  TYPE_QUERIES_ASSERT_FALSE(Dyninst::x86::k7, isGeneralPurpose);
+
   return EXIT_SUCCESS;
 }
