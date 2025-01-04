@@ -4,7 +4,7 @@
 #include "rose_reg_check.h"
 
 int main() {
-  ROSEREG_CHECK(Dyninst::x86::eip, x86_regclass_ip, 0, x86_regpos_all);
+  ROSEREG_CHECK(Dyninst::x86::eip, x86_regclass_ip, 0, x86_regpos_dword);
 
   ROSEREG_CHECK(Dyninst::x86::al, x86_regclass_gpr, x86_gpr_ax, x86_regpos_low_byte);
   ROSEREG_CHECK(Dyninst::x86::ah, x86_regclass_gpr, x86_gpr_ax, x86_regpos_high_byte);
