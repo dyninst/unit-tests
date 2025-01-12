@@ -1,0 +1,1 @@
+project(type_query LANGUAGES CXX)
