@@ -35,3 +35,9 @@ target_compile_options(type_query_amdgpu_gfx908 PRIVATE ${UNIT_TESTS_WARNING_FLA
 target_include_directories(type_query_amdgpu_gfx908 PRIVATE ${UNIT_TESTS_INCLUDES})
 target_link_libraries(type_query_amdgpu_gfx908 PRIVATE Dyninst::common)
 add_test(NAME machregister_type_query_amdgpu_gfx908 COMMAND type_query_amdgpu_gfx908)
+
+add_executable(type_query_amdgpu_gfx90a amdgpu_gfx90a.cpp)
+target_compile_options(type_query_amdgpu_gfx90a PRIVATE ${UNIT_TESTS_WARNING_FLAGS})
+target_include_directories(type_query_amdgpu_gfx90a PRIVATE ${UNIT_TESTS_INCLUDES})
+target_link_libraries(type_query_amdgpu_gfx90a PRIVATE Dyninst::common)
+add_test(NAME machregister_type_query_amdgpu_gfx90a COMMAND type_query_amdgpu_gfx90a)
