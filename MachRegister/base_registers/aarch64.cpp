@@ -41,5 +41,35 @@ int main() {
   BASEREG_CHECK(aarch64::sp, aarch64::sp);
   BASEREG_CHECK(aarch64::xzr, aarch64::xzr);
 
+  // Condition flags
+  BASEREG_CHECK(aarch64::nzcv, aarch64::nzcv);
+  BASEREG_CHECK(aarch64::n, aarch64::nzcv);
+  BASEREG_CHECK(aarch64::z, aarch64::nzcv);
+  BASEREG_CHECK(aarch64::c, aarch64::nzcv);
+  BASEREG_CHECK(aarch64::v, aarch64::nzcv);
+
+  // Interrupt Mask Bits
+  BASEREG_CHECK(aarch64::daif, aarch64::daif);
+  BASEREG_CHECK(aarch64::d, aarch64::daif);
+  BASEREG_CHECK(aarch64::a, aarch64::daif);
+  BASEREG_CHECK(aarch64::i, aarch64::daif);
+  BASEREG_CHECK(aarch64::f_, aarch64::daif);
+
+  // Process state flags
+  BASEREG_CHECK(aarch64::pstate, aarch64::pstate);
+  BASEREG_CHECK(aarch64::allint, aarch64::pstate);
+  BASEREG_CHECK(aarch64::currentel, aarch64::pstate);
+  BASEREG_CHECK(aarch64::dit, aarch64::pstate);
+  BASEREG_CHECK(aarch64::pan, aarch64::pstate);
+  BASEREG_CHECK(aarch64::pm, aarch64::pstate);
+  BASEREG_CHECK(aarch64::spsel, aarch64::pstate);
+  BASEREG_CHECK(aarch64::ssbs, aarch64::pstate);
+  BASEREG_CHECK(aarch64::svcr, aarch64::pstate);
+  BASEREG_CHECK(aarch64::tco, aarch64::pstate);
+  BASEREG_CHECK(aarch64::uao, aarch64::pstate);
+
+  // Floating-point control flags
+  BASEREG_CHECK(aarch64::fpcr, aarch64::fpcr);
+
   return EXIT_SUCCESS;
 }
