@@ -24,6 +24,12 @@ target_include_directories(basereg_ppc64 PRIVATE ${UNIT_TESTS_INCLUDES})
 target_link_libraries(basereg_ppc64 PRIVATE Dyninst::common)
 add_test(NAME machregister_basereg_ppc64 COMMAND basereg_ppc64)
 
+add_executable(basereg_ppc32 ppc32.cpp)
+target_compile_options(basereg_ppc32 PRIVATE ${UNIT_TESTS_WARNING_FLAGS})
+target_include_directories(basereg_ppc32 PRIVATE ${UNIT_TESTS_INCLUDES})
+target_link_libraries(basereg_ppc32 PRIVATE Dyninst::common)
+add_test(NAME machregister_basereg_ppc32 COMMAND basereg_ppc32)
+
 
 # These are disabled until we can decide on how to represent base registers for AMDGPU
 add_executable(basereg_amdgpu_gfx908 amdgpu_gfx908.cpp)
