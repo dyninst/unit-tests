@@ -14,7 +14,7 @@ internal functions.
 Build a version of Dyninst that has all symbols exposed.
 
 ```console
-$ cmake /path/to/Dyninst -DDDYNINST_EXPORT_ALL=1 -DCMAKE_INSTALL_PREFIX=/path/to/Dyninst/install
+$ cmake /path/to/Dyninst -DDYNINST_ENABLE_TESTS=1 -DCMAKE_INSTALL_PREFIX=/path/to/Dyninst/install
 ```
 
 The unit tests need both the installed version of Dyninst and its source tree.
